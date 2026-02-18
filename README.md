@@ -7,14 +7,23 @@ This project demonstrates clean UI architecture, reusable components, state mana
 ##  ✨ Features
 
 💬 Real-time message rendering
+
 😊 Emoji picker
+
 🎙 Voice message recording & preview
+
 📎 File attachments with preview
+
 🔎 Chat search
+
 🟢 Online/offline indicators
+
 📌 Pinned chats
+
 🔕 Muted chats
+
 📱 Responsive layout
+
 🎨 Modern light SaaS UI
 
 ## 🛠 Tech Stack
