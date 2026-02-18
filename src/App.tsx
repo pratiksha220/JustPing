@@ -24,7 +24,7 @@ interface Chat {
   name: string
   lastMessage: string
   time: string
-  unread?: number
+ 
   isMuted?: boolean
   isPinned?: boolean
   isOnline?: boolean
@@ -36,44 +36,44 @@ const sampleChats: Chat[] = [
     name: 'Ramesh Sharma',
     lastMessage: 'Reaching office in 10 mins 🚗',
     time: '09:14',
-    unread: 3,
+    
     isPinned: true,
     isOnline: true,
   },
   {
     id: 2,
     name: 'Neha Verma',
-    lastMessage: 'Send me the final presentation please 🙏',
+    lastMessage: '',
     time: '08:52',
-    unread: 1,
+    
     isOnline: true,
   },
   {
     id: 3,
     name: 'Product Team',
-    lastMessage: 'Let’s lock the scope before Friday.',
+    lastMessage: '',
     time: 'Yesterday',
-    unread: 5,
+    
     isMuted: true,
   },
   {
     id: 4,
     name: 'Weekend Football',
-    lastMessage: 'Match at 7 AM, don’t be late ⚽',
+    lastMessage: '',
     time: 'Yesterday',
     isMuted: true,
   },
   {
     id: 5,
     name: 'Family Group',
-    lastMessage: 'Dinner at Nana’s place on Sunday ❤️',
+    lastMessage: '',
     time: 'Sun',
-    unread: 9,
+    
   },
   {
     id: 6,
     name: 'Freelance Client',
-    lastMessage: 'Invoice received, processing the payment.',
+    lastMessage: '',
     time: 'Sat',
   },
 ]
@@ -81,13 +81,13 @@ const sampleChats: Chat[] = [
 const sampleMessages: Message[] = [
   {
     id: 1,
-    text: 'Hey! This is your new WhatsApp-style chat UI 👋',
+    text: 'Hey! This is your new JustPing chat UI 👋',
     time: '18:11',
     side: 'in',
   },
   {
     id: 2,
-    text: 'Feel free to type and send messages below.',
+    text: 'Feel free to type and send messages below. You can send audios and attachments too!',
     time: '18:12',
     side: 'in',
   },
@@ -241,7 +241,7 @@ export const App: React.FC = () => {
     setInput((prev) => {
       const next = (prev ?? '') + emoji
 
-      // Focus + move caret to the end on the next tick
+      
       queueMicrotask(() => {
         if (inputRef.current) {
           const el = inputRef.current
@@ -250,7 +250,7 @@ export const App: React.FC = () => {
           try {
             el.setSelectionRange(length, length)
           } catch {
-            // ignore selection errors in older browsers
+            
           }
         }
       })
@@ -263,7 +263,7 @@ export const App: React.FC = () => {
     if (isRecording) return
 
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      // Basic fallback: just do nothing if unsupported
+      
       return
     }
 
@@ -289,7 +289,7 @@ export const App: React.FC = () => {
           return
         }
 
-        // Cleanup old preview URL if any
+        
         if (audioPreviewUrl) {
           URL.revokeObjectURL(audioPreviewUrl)
         }
@@ -297,14 +297,14 @@ export const App: React.FC = () => {
         const url = URL.createObjectURL(blob)
         setAudioPreviewUrl(url)
 
-        // Stop all tracks on the stream
+       
         stream.getTracks().forEach((track) => track.stop())
       }
 
       recorder.start()
       setIsRecording(true)
     } catch (error) {
-      // If user blocks mic permissions or any error occurs, just ensure state is reset
+      
       console.error('Error starting recording', error)
       setIsRecording(false)
     }
@@ -326,7 +326,7 @@ export const App: React.FC = () => {
     if (isRecording) {
       stopRecording()
     } else {
-      // When starting a new recording, clear any previous preview
+      
       if (audioPreviewUrl) {
         URL.revokeObjectURL(audioPreviewUrl)
         setAudioPreviewUrl(null)
@@ -378,7 +378,7 @@ export const App: React.FC = () => {
 
     setPendingAttachments((prev) => [...prev, ...newAttachments])
 
-    // Allow selecting the same file again later
+    
     event.target.value = ''
   }
 
@@ -412,15 +412,13 @@ export const App: React.FC = () => {
   }
 
   return (
+    //adding styles to the website- overall component,sidebar, sidebar header--
   <div className="h-screen w-screen bg-gradient-to-br from-sky-100 via-blue-100 to-indigo-100 flex items-center justify-center overflow-hidden">
   
   <div className="h-[92vh] w-[95vw] max-w-[1400px] bg-white rounded-3xl shadow-2xl border border-blue-100 overflow-hidden flex">
     
-    {/* Sidebar */}
     <aside className="w-80 min-w-[320px] max-w-[320px] flex-none bg-white border-r border-blue-100 flex flex-col">
 
-
-        {/* Sidebar header */}
         <div className="h-16 px-4 flex items-center justify-between bg-white border-b border-blue-100">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-sm font-semibold text-white shadow-md">
@@ -435,20 +433,10 @@ export const App: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex gap-3 text-slate-400 text-xl">
-            <button className="hover:text-blue-500 transition-colors" aria-label="Status">
-              ●
-            </button>
-            <button className="hover:text-blue-500 transition-colors" aria-label="New chat">
-              ＋
-            </button>
-            <button className="hover:text-blue-500 transition-colors" aria-label="Menu">
-              ⋮
-            </button>
-          </div>
+          
         </div>
 
-        {/* Search */}
+        
         <div className="p-3 border-b border-blue-100 bg-white">
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400 text-xs">
@@ -458,12 +446,12 @@ export const App: React.FC = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-8 pr-3 py-2 rounded-xl bg-blue-50 text-sm placeholder:text-blue-300 border border-blue-100 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 focus:outline-none transition"
-              placeholder="Search or start a new chat"
+              placeholder="Search a chat"
             />
           </div>
         </div>
 
-        {/* Chats list */}
+        
         <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-blue-200 scrollbar-track-transparent">
           {filteredChats.map((chat) => {
             const isActive = chat.id === activeChatId
@@ -554,10 +542,10 @@ export const App: React.FC = () => {
 </div>
 </aside>
 
-{/* Main chat */}
+
 <main className="flex-1 flex flex-col bg-blue-50">
 
-  {/* Chat header */}
+  
   <div className="h-16 px-5 flex items-center justify-between bg-white border-b border-blue-100">
     <div className="flex items-center gap-3">
       <div className="relative h-9 w-9">
@@ -585,20 +573,13 @@ export const App: React.FC = () => {
       </div>
     </div>
 
-    <div className="flex items-center gap-4 text-blue-400 text-lg">
-      <button className="hover:text-blue-600 transition-colors" aria-label="Search">
-        🔍
-      </button>
-      <button className="hover:text-blue-600 transition-colors" aria-label="More">
-        ⋮
-      </button>
-    </div>
+    
   </div>
 
-  {/* Messages */}
+  
   <div className="flex-1 overflow-y-auto bg-gradient-to-b from-blue-50 to-sky-100 px-6 py-4 space-y-3 scrollbar-thin scrollbar-thumb-blue-200 scrollbar-track-transparent">
 
-    {/* Date pill */}
+    
     <div className="flex justify-center my-2">
       <div className="px-4 py-1 rounded-full bg-white shadow-sm text-[11px] text-blue-500 border border-blue-100">
         TODAY
@@ -670,10 +651,10 @@ export const App: React.FC = () => {
     <div ref={messagesEndRef} />
   </div>
 
-         {/* Input area */}
+         
 <div className="px-4 pb-4 pt-3 bg-white border-t border-blue-100">
 
-  {/* Emoji picker panel */}
+  
   {showEmojiPicker && (
     <div className="mb-3 mx-auto w-full max-w-md max-h-72 rounded-2xl bg-white border border-blue-100 shadow-xl p-3 overflow-y-auto scrollbar-thin scrollbar-thumb-blue-200 scrollbar-track-transparent">
       <div className="flex justify-between items-center mb-2 px-1">
@@ -703,7 +684,7 @@ export const App: React.FC = () => {
     </div>
   )}
 
-  {/* File attachments preview panel */}
+  
   {pendingAttachments.length > 0 && (
     <div className="mb-3 mx-auto w-full max-w-md rounded-2xl bg-white border border-blue-100 shadow-lg px-4 py-3 flex flex-col gap-3">
       
@@ -773,7 +754,7 @@ export const App: React.FC = () => {
   )}
 
 
-          {/* Voice preview panel */}
+          
 {audioPreviewUrl && (
   <div className="mb-3 mx-auto w-full max-w-md rounded-2xl bg-white border border-blue-100 shadow-lg px-4 py-3 flex flex-col gap-3">
     
