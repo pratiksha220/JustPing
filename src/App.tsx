@@ -412,434 +412,472 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="h-screen w-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-100 flex items-stretch justify-center">
-      <div className="h-full w-full max-w-7xl bg-wa-chat/90 backdrop-blur-xl md:my-6 md:rounded-3xl overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.65)] border border-slate-800/80 flex">
-        {/* Sidebar */}
-        <aside className="w-80 bg-wa-sidebar/95 border-r border-slate-800 flex flex-col">
-          {/* Sidebar header */}
-          <div className="h-16 px-4 flex items-center justify-between bg-wa-input/95 border-b border-slate-800">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-full bg-emerald-500 flex items-center justify-center text-sm font-semibold">
-                JP
-              </div>
-              <div className="flex flex-col">
-                <span className="text-sm font-semibold">JustPing</span>
-                <span className="text-xs text-slate-400 flex items-center gap-1">
-                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                  Online
-                </span>
-              </div>
-            </div>
-            <div className="flex gap-3 text-slate-400 text-xl">
-              <button className="hover:text-slate-200 transition-colors" aria-label="Status">
-                ●
-              </button>
-              <button className="hover:text-slate-200 transition-colors" aria-label="New chat">
-                ＋
-              </button>
-              <button className="hover:text-slate-200 transition-colors" aria-label="Menu">
-                ⋮
-              </button>
-            </div>
-          </div>
+  <div className="h-screen w-screen bg-gradient-to-br from-sky-100 via-blue-100 to-indigo-100 flex items-center justify-center overflow-hidden">
+  
+  <div className="h-[92vh] w-[95vw] max-w-[1400px] bg-white rounded-3xl shadow-2xl border border-blue-100 overflow-hidden flex">
+    
+    {/* Sidebar */}
+    <aside className="w-80 min-w-[320px] max-w-[320px] flex-none bg-white border-r border-blue-100 flex flex-col">
 
-          {/* Search */}
-          <div className="p-3 border-b border-slate-800 bg-wa-sidebar">
-            <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
-                🔍
+
+        {/* Sidebar header */}
+        <div className="h-16 px-4 flex items-center justify-between bg-white border-b border-blue-100">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-sm font-semibold text-white shadow-md">
+              JP
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm font-semibold text-slate-700">JustPing</span>
+              <span className="text-xs text-blue-500 flex items-center gap-1">
+                <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
+                Online
               </span>
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-8 pr-3 py-2 rounded-lg bg-wa-input text-xs placeholder:text-slate-500 border border-transparent focus:border-wa-accent focus:outline-none"
-                placeholder="Search or start a new chat"
-              />
             </div>
           </div>
 
-          {/* Chats list */}
-          <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700/70 scrollbar-track-transparent">
-            {filteredChats.map((chat) => {
-              const isActive = chat.id === activeChatId
-              const thread = messagesByChat[chat.id] ?? []
-              const last = thread[thread.length - 1]
+          <div className="flex gap-3 text-slate-400 text-xl">
+            <button className="hover:text-blue-500 transition-colors" aria-label="Status">
+              ●
+            </button>
+            <button className="hover:text-blue-500 transition-colors" aria-label="New chat">
+              ＋
+            </button>
+            <button className="hover:text-blue-500 transition-colors" aria-label="Menu">
+              ⋮
+            </button>
+          </div>
+        </div>
 
-              let previewText = chat.lastMessage
-              let previewTime = chat.time
+        {/* Search */}
+        <div className="p-3 border-b border-blue-100 bg-white">
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400 text-xs">
+              🔍
+            </span>
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-8 pr-3 py-2 rounded-xl bg-blue-50 text-sm placeholder:text-blue-300 border border-blue-100 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 focus:outline-none transition"
+              placeholder="Search or start a new chat"
+            />
+          </div>
+        </div>
 
-              if (last) {
-                if (last.attachment) {
-                  previewText = last.attachment.type.startsWith('image/')
-                    ? 'Photo'
-                    : last.attachment.name
-                } else if (last.audioUrl) {
-                  previewText = 'Voice message'
-                } else if (last.text) {
-                  previewText = last.text
-                }
-                previewTime = last.time
+        {/* Chats list */}
+        <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-blue-200 scrollbar-track-transparent">
+          {filteredChats.map((chat) => {
+            const isActive = chat.id === activeChatId
+            const thread = messagesByChat[chat.id] ?? []
+            const last = thread[thread.length - 1]
+
+            let previewText = chat.lastMessage
+            let previewTime = chat.time
+
+            if (last) {
+              if (last.attachment) {
+                previewText = last.attachment.type.startsWith('image/')
+                  ? 'Photo'
+                  : last.attachment.name
+              } else if (last.audioUrl) {
+                previewText = 'Voice message'
+              } else if (last.text) {
+                previewText = last.text
               }
+              previewTime = last.time
+            }
 
-              return (
-                <button
-                  key={chat.id}
-                  className={`w-full px-4 py-3 flex gap-3 items-center hover:bg-slate-800/60 transition-colors text-left border-l-2 ${
-                    isActive ? 'bg-slate-800/80 border-wa-accent' : 'border-transparent'
-                  }`}
-                  onClick={() => {
-                    setActiveChatId(chat.id)
-                    ensureChatHasInitialMessages(chat.id)
-                  }}
-                >
-                <div className="relative">
-                  <div className="h-11 w-11 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-sm font-semibold shadow-md">
-                    {chat.name
-                      .split(' ')
-                      .map((p) => p[0])
-                      .join('')
-                      .slice(0, 2)
-                      .toUpperCase()}
-                  </div>
-                  <span
-                    className={`absolute -bottom-1 left-1 h-2.5 w-2.5 rounded-full border border-wa-sidebar ${
-                      chat.isOnline ? 'bg-emerald-400' : 'bg-slate-500'
-                    }`}
-                    aria-hidden="true"
-                  />
-                  {chat.isPinned && (
-                    <span className="absolute -bottom-1 -right-1 text-[10px] bg-wa-chat px-1 rounded-full">
-                      📌
-                    </span>
-                  )}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-sm font-semibold truncate">{chat.name}</span>
-                    <span className="text-[11px] text-slate-400">{previewTime}</span>
-                  </div>
-                  <div className="flex justify-between items-end gap-2">
-                    <span className="text-xs text-slate-400 truncate">
-                      {thread.length > 0 ? previewText : 'No messages yet'}
-                    </span>
-                    {chat.isMuted && (
-                      <div className="flex items-center gap-1">
-                        <span className="text-xs">🔕</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                </button>
-              )
-            })}
 
-            {filteredChats.length === 0 && (
-              <div className="px-4 py-6 text-center text-xs text-slate-500">
-                No chats found.
+            return (
+  <button
+    key={chat.id}
+    className={`w-full px-4 py-3 flex gap-3 items-center text-left transition-all duration-200 border-l-4 ${
+      isActive
+        ? 'bg-blue-50 border-blue-500 shadow-sm'
+        : 'border-transparent hover:bg-blue-50'
+    }`}
+    onClick={() => {
+      setActiveChatId(chat.id)
+      ensureChatHasInitialMessages(chat.id)
+    }}
+  >
+    <div className="relative">
+      <div className="h-11 w-11 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-sm font-semibold text-white shadow-md">
+        {chat.name
+          .split(' ')
+          .map((p) => p[0])
+          .join('')
+          .slice(0, 2)
+          .toUpperCase()}
+      </div>
+      <span
+        className={`absolute -bottom-1 left-1 h-2.5 w-2.5 rounded-full border-2 border-white ${
+          chat.isOnline ? 'bg-green-400' : 'bg-slate-400'
+        }`}
+        aria-hidden="true"
+      />
+      {chat.isPinned && (
+        <span className="absolute -bottom-1 -right-1 text-[10px] bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded-full shadow-sm">
+          📌
+        </span>
+      )}
+    </div>
+
+    <div className="flex-1 min-w-0">
+      <div className="flex justify-between items-center mb-1">
+        <span className="text-sm font-semibold text-slate-700 truncate">
+          {chat.name}
+        </span>
+        <span className="text-[11px] text-blue-400">
+          {previewTime}
+        </span>
+      </div>
+      <div className="flex justify-between items-end gap-2">
+        <span className="text-xs text-slate-500 truncate">
+          {thread.length > 0 ? previewText : 'No messages yet'}
+        </span>
+        {chat.isMuted && (
+          <div className="flex items-center gap-1 text-blue-400">
+            <span className="text-xs">🔕</span>
+          </div>
+        )}
+      </div>
+    </div>
+  </button>
+)
+})}
+
+{filteredChats.length === 0 && (
+  <div className="px-4 py-6 text-center text-xs text-blue-400">
+    No chats found.
+  </div>
+)}
+</div>
+</aside>
+
+{/* Main chat */}
+<main className="flex-1 flex flex-col bg-blue-50">
+
+  {/* Chat header */}
+  <div className="h-16 px-5 flex items-center justify-between bg-white border-b border-blue-100">
+    <div className="flex items-center gap-3">
+      <div className="relative h-9 w-9">
+        <div className="h-9 w-9 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-xs font-semibold text-white shadow-md">
+          {activeChat.name
+            .split(' ')
+            .map((p) => p[0])
+            .join('')
+            .slice(0, 2)
+            .toUpperCase()}
+        </div>
+        <span
+          className={`absolute -bottom-0.5 right-0 h-2.5 w-2.5 rounded-full border-2 border-white ${
+            activeChat.isOnline ? 'bg-green-400' : 'bg-slate-400'
+          }`}
+        />
+      </div>
+      <div className="flex flex-col">
+        <span className="text-sm font-semibold text-slate-700">
+          {activeChat.name}
+        </span>
+        <span className="text-[11px] text-blue-500">
+          {activeChat.isOnline ? 'Online' : 'Offline'}
+        </span>
+      </div>
+    </div>
+
+    <div className="flex items-center gap-4 text-blue-400 text-lg">
+      <button className="hover:text-blue-600 transition-colors" aria-label="Search">
+        🔍
+      </button>
+      <button className="hover:text-blue-600 transition-colors" aria-label="More">
+        ⋮
+      </button>
+    </div>
+  </div>
+
+  {/* Messages */}
+  <div className="flex-1 overflow-y-auto bg-gradient-to-b from-blue-50 to-sky-100 px-6 py-4 space-y-3 scrollbar-thin scrollbar-thumb-blue-200 scrollbar-track-transparent">
+
+    {/* Date pill */}
+    <div className="flex justify-center my-2">
+      <div className="px-4 py-1 rounded-full bg-white shadow-sm text-[11px] text-blue-500 border border-blue-100">
+        TODAY
+      </div>
+    </div>
+
+    {activeMessages.map((message) => (
+      <div
+        key={message.id}
+        className={`flex w-full ${
+          message.side === 'out' ? 'justify-end' : 'justify-start'
+        }`}
+      >
+        <div
+          className={`relative max-w-[70%] px-4 py-2.5 text-sm leading-snug shadow-sm break-words ${
+            message.side === 'out'
+              ? 'bg-blue-500 text-white rounded-2xl rounded-tr-md shadow-md'
+              : 'bg-white text-slate-700 rounded-2xl rounded-tl-md border border-blue-100'
+          }`}
+        >
+          {message.audioUrl ? (
+            <div className="flex flex-col gap-1">
+              <span className="text-[11px] uppercase tracking-wide opacity-80">
+                Voice message
+              </span>
+              <audio
+                controls
+                src={message.audioUrl}
+                className="w-48 max-w-full"
+              />
+            </div>
+          ) : message.attachment ? (
+            <div className="flex flex-col gap-1">
+              {message.attachment.type.startsWith('image/') ? (
+                <img
+                  src={message.attachment.url}
+                  alt={message.attachment.name}
+                  style={{ maxWidth: '240px', maxHeight: '160px', display: 'block' }}
+                  className="rounded-xl object-cover border border-blue-100"
+                />
+              ) : (
+                <div className="flex items-center gap-3">
+                  <div className="h-9 w-9 rounded-full bg-blue-100 flex items-center justify-center text-lg">
+                    📎
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-xs font-medium break-all">
+                      {message.attachment.name}
+                    </span>
+                    <span className="text-[11px] text-blue-400">
+                      {formatFileSize(message.attachment.size)}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <span>{message.text}</span>
+          )}
+
+          <div className="mt-1 text-[10px] flex justify-end gap-1 items-center opacity-70">
+            <span>{message.time}</span>
+            {message.side === 'out' && <span>✓✓</span>}
+          </div>
+        </div>
+      </div>
+    ))}
+
+    <div ref={messagesEndRef} />
+  </div>
+
+         {/* Input area */}
+<div className="px-4 pb-4 pt-3 bg-white border-t border-blue-100">
+
+  {/* Emoji picker panel */}
+  {showEmojiPicker && (
+    <div className="mb-3 mx-auto w-full max-w-md max-h-72 rounded-2xl bg-white border border-blue-100 shadow-xl p-3 overflow-y-auto scrollbar-thin scrollbar-thumb-blue-200 scrollbar-track-transparent">
+      <div className="flex justify-between items-center mb-2 px-1">
+        <span className="text-[11px] uppercase tracking-wide text-blue-400 font-medium">
+          Emoji picker
+        </span>
+        <button
+          onClick={() => setShowEmojiPicker(false)}
+          className="text-xs text-blue-400 hover:text-blue-600 transition-colors"
+        >
+          Close
+        </button>
+      </div>
+
+      <div className="grid grid-cols-8 gap-1.5 text-lg">
+        {emojiList.map((emoji, idx) => (
+          <button
+            type="button"
+            key={`${emoji}-${idx}`}
+            className="h-8 w-8 hover:bg-blue-50 rounded-lg flex items-center justify-center transition"
+            onClick={() => handleEmojiClick(emoji)}
+          >
+            {emoji}
+          </button>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {/* File attachments preview panel */}
+  {pendingAttachments.length > 0 && (
+    <div className="mb-3 mx-auto w-full max-w-md rounded-2xl bg-white border border-blue-100 shadow-lg px-4 py-3 flex flex-col gap-3">
+      
+      <div className="flex items-center justify-between">
+        <span className="text-[11px] uppercase tracking-wide text-blue-400 font-medium">
+          {pendingAttachments.length === 1
+            ? '1 file ready to send'
+            : `${pendingAttachments.length} files ready to send`}
+        </span>
+
+        <button
+          type="button"
+          onClick={clearAttachments}
+          className="text-xs text-blue-400 hover:text-blue-600 transition-colors"
+        >
+          Clear all
+        </button>
+      </div>
+
+      <div className="space-y-2 max-h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-blue-200 scrollbar-track-transparent">
+        {pendingAttachments.map((att) => (
+          <div
+            key={att.id}
+            className="flex items-center gap-3 rounded-xl bg-blue-50 border border-blue-100 px-3 py-2"
+          >
+            {att.type.startsWith('image/') ? (
+              <img
+                src={att.url}
+                alt={att.name}
+                style={{ width: '48px', height: '48px', display: 'block' }}
+                className="rounded-lg object-cover border border-blue-100"
+              />
+            ) : (
+              <div className="h-9 w-9 rounded-full bg-blue-100 flex items-center justify-center text-lg">
+                📄
               </div>
             )}
-          </div>
-        </aside>
 
-        {/* Main chat */}
-        <main className="flex-1 flex flex-col bg-wa-chat/95">
-          {/* Chat header */}
-          <div className="h-16 px-5 flex items-center justify-between bg-wa-input/95 border-b border-slate-800">
-            <div className="flex items-center gap-3">
-              <div className="relative h-9 w-9">
-                <div className="h-9 w-9 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-xs font-semibold shadow-md">
-                {activeChat.name
-                  .split(' ')
-                  .map((p) => p[0])
-                  .join('')
-                  .slice(0, 2)
-                  .toUpperCase()}
-                </div>
-                <span
-                  className={`absolute -bottom-0.5 right-0 h-2.5 w-2.5 rounded-full border border-wa-input ${
-                    activeChat.isOnline ? 'bg-emerald-400' : 'bg-slate-500'
-                  }`}
-                />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-sm font-semibold">{activeChat.name}</span>
-                <span className="text-[11px] text-slate-400">
-                  {activeChat.isOnline ? 'Online' : 'Offline'}
+            <div className="flex-1 min-w-0">
+              <div className="flex justify-between items-center gap-2">
+                <span className="text-xs font-medium truncate text-slate-700">
+                  {att.name}
+                </span>
+                <span className="text-[11px] text-blue-400 shrink-0">
+                  {formatFileSize(att.size)}
                 </span>
               </div>
-            </div>
-            <div className="flex items-center gap-4 text-slate-300 text-lg">
-              <button className="hover:text-slate-100 transition-colors" aria-label="Search">
-                🔍
-              </button>
-              <button className="hover:text-slate-100 transition-colors" aria-label="More">
-                ⋮
-              </button>
+              <span className="text-[10px] text-slate-400">
+                {att.type || 'Unknown type'}
+              </span>
             </div>
           </div>
+        ))}
+      </div>
 
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto bg-gradient-to-b from-wa-chat to-wa-bg px-6 py-4 space-y-2 scrollbar-thin scrollbar-thumb-slate-700/70 scrollbar-track-transparent">
-            {/* Date pill */}
-            <div className="flex justify-center my-2">
-              <div className="px-3 py-1 rounded-full bg-slate-800/80 text-[11px] text-slate-200">
-                TODAY
-              </div>
-            </div>
+      <div className="flex justify-end gap-2 text-xs">
+        <button
+          type="button"
+          onClick={sendAttachments}
+          className="px-4 py-1.5 rounded-full bg-blue-500 text-white font-medium hover:bg-blue-600 transition-all shadow-md"
+        >
+          Send file{pendingAttachments.length > 1 ? 's' : ''}
+        </button>
+      </div>
 
-            {activeMessages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex w-full ${message.side === 'out' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div
-                  className={`relative max-w-[70%] rounded-lg px-3 py-2 text-sm leading-snug shadow-sm break-words ${
-                    message.side === 'out'
-                      ? 'bg-wa-message-out text-slate-50 rounded-tr-none'
-                      : 'bg-wa-message-in text-slate-100 rounded-tl-none'
-                  }`}
-                >
-                  {message.audioUrl ? (
-                    <div className="flex flex-col gap-1">
-                      <span className="text-[11px] uppercase tracking-wide text-slate-200/80">
-                        Voice message
-                      </span>
-                      <audio
-                        controls
-                        src={message.audioUrl}
-                        className="w-48 max-w-full accent-wa-accent"
-                      />
-                    </div>
-                  ) : message.attachment ? (
-                    <div className="flex flex-col gap-1">
-                      {message.attachment.type.startsWith('image/') ? (
-                        <img
-                          src={message.attachment.url}
-                          alt={message.attachment.name}
-                          style={{ maxWidth: '240px', maxHeight: '160px', display: 'block' }}
-                          className="rounded-lg object-cover border border-slate-700/70 bg-black/30"
-                        />
-                      ) : (
-                        <div className="flex items-center gap-3">
-                          <div className="h-9 w-9 rounded-full bg-slate-900/70 flex items-center justify-center text-lg">
-                            📎
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-xs font-medium break-all">
-                              {message.attachment.name}
-                            </span>
-                            <span className="text-[11px] text-slate-300/80">
-                              {formatFileSize(message.attachment.size)}
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <span>{message.text}</span>
-                  )}
-                  <div className="mt-1 text-[10px] text-slate-300/80 flex justify-end gap-1 items-center">
-                    <span>{message.time}</span>
-                    {message.side === 'out' && <span>✓✓</span>}
-                  </div>
-                </div>
-              </div>
-            ))}
+    </div>
+  )}
 
-            <div ref={messagesEndRef} />
-          </div>
 
-          {/* Input area */}
-          <div className="px-4 pb-4 pt-3 bg-wa-input/95 border-t border-slate-800">
-            {/* Emoji picker panel */}
-            {showEmojiPicker && (
-              <div className="mb-3 mx-auto w-full max-w-md max-h-72 rounded-2xl bg-wa-chat border border-slate-800/80 shadow-2xl p-3 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700/70 scrollbar-track-transparent">
-                <div className="flex justify-between items-center mb-2 px-1">
-                  <span className="text-[11px] uppercase tracking-wide text-slate-400">
-                    Emoji picker
-                  </span>
-                  <button
-                    onClick={() => setShowEmojiPicker(false)}
-                    className="text-xs text-slate-400 hover:text-slate-100"
-                  >
-                    Close
-                  </button>
-                </div>
-                <div className="grid grid-cols-8 gap-1.5 text-lg">
-                  {emojiList.map((emoji, idx) => (
-                    <button
-                      type="button"
-                      key={`${emoji}-${idx}`}
-                      className="h-8 w-8 hover:bg-slate-700/70 rounded-md flex items-center justify-center"
-                      onClick={() => handleEmojiClick(emoji)}
-                    >
-                      {emoji}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
+          {/* Voice preview panel */}
+{audioPreviewUrl && (
+  <div className="mb-3 mx-auto w-full max-w-md rounded-2xl bg-white border border-blue-100 shadow-lg px-4 py-3 flex flex-col gap-3">
+    
+    <div className="flex items-center justify-between">
+      <span className="text-[11px] uppercase tracking-wide text-blue-400 font-medium">
+        Voice message preview
+      </span>
+      <span className="text-xs text-blue-400">
+        {isRecording ? 'Recording…' : 'Ready to send'}
+      </span>
+    </div>
 
-            {/* File attachments preview panel */}
-            {pendingAttachments.length > 0 && (
-              <div className="mb-3 mx-auto w-full max-w-md rounded-2xl bg-wa-chat border border-slate-800/80 shadow-xl px-4 py-3 flex flex-col gap-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] uppercase tracking-wide text-slate-400">
-                    {pendingAttachments.length === 1
-                      ? '1 file ready to send'
-                      : `${pendingAttachments.length} files ready to send`}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={clearAttachments}
-                    className="text-xs text-slate-400 hover:text-slate-100"
-                  >
-                    Clear all
-                  </button>
-                </div>
-                <div className="space-y-2 max-h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700/70 scrollbar-track-transparent">
-                  {pendingAttachments.map((att) => (
-                    <div
-                      key={att.id}
-                      className="flex items-center gap-3 rounded-xl bg-wa-chat/80 border border-slate-800/80 px-3 py-2"
-                    >
-                      {att.type.startsWith('image/') ? (
-                        <img
-                          src={att.url}
-                          alt={att.name}
-                          style={{ width: '48px', height: '48px', display: 'block' }}
-                          className="rounded-lg object-cover border border-slate-700/70 bg-black/30"
-                        />
-                      ) : (
-                        <div className="h-9 w-9 rounded-full bg-slate-900/70 flex items-center justify-center text-lg">
-                          📄
-                        </div>
-                      )}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex justify-between items-center gap-2">
-                          <span className="text-xs font-medium truncate">
-                            {att.name}
-                          </span>
-                          <span className="text-[11px] text-slate-400 shrink-0">
-                            {formatFileSize(att.size)}
-                          </span>
-                        </div>
-                        <span className="text-[10px] text-slate-500">
-                          {att.type || 'Unknown type'}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="flex justify-end gap-2 text-xs">
-                  <button
-                    type="button"
-                    onClick={sendAttachments}
-                    className="px-3 py-1.5 rounded-full bg-wa-accent text-wa-chat font-medium hover:bg-wa-accent-light transition-colors"
-                  >
-                    Send file{pendingAttachments.length > 1 ? 's' : ''}
-                  </button>
-                </div>
-              </div>
-            )}
+    <audio
+      controls
+      src={audioPreviewUrl}
+      className="w-full accent-blue-500"
+    />
 
-            {/* Voice preview panel */}
-            {audioPreviewUrl && (
-              <div className="mb-3 mx-auto w-full max-w-md rounded-2xl bg-wa-chat border border-slate-800/80 shadow-xl px-4 py-3 flex flex-col gap-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] uppercase tracking-wide text-slate-400">
-                    Voice message preview
-                  </span>
-                  <span className="text-xs text-slate-400">
-                    {isRecording ? 'Recording…' : 'Ready to send'}
-                  </span>
-                </div>
-                <audio
-                  controls
-                  src={audioPreviewUrl}
-                  className="w-full accent-wa-accent"
-                />
-                <div className="flex justify-end gap-2 text-xs">
-                  <button
-                    type="button"
-                    onClick={discardVoiceMessage}
-                    className="px-3 py-1.5 rounded-full border border-slate-700 text-slate-200 hover:bg-slate-800/80 transition-colors"
-                  >
-                    Discard
-                  </button>
-                  <button
-                    type="button"
-                    onClick={sendVoiceMessage}
-                    className="px-3 py-1.5 rounded-full bg-wa-accent text-wa-chat font-medium hover:bg-wa-accent-light transition-colors"
-                  >
-                    Send voice
-                  </button>
-                </div>
-              </div>
-            )}
+    <div className="flex justify-end gap-2 text-xs">
+      <button
+        type="button"
+        onClick={discardVoiceMessage}
+        className="px-4 py-1.5 rounded-full border border-blue-200 text-blue-500 hover:bg-blue-50 transition"
+      >
+        Discard
+      </button>
 
-            <div className="flex items-end gap-3">
-              <button
-                type="button"
-                onClick={() => setShowEmojiPicker((v) => !v)}
-                className="h-10 w-10 flex items-center justify-center rounded-full text-xl text-slate-300 hover:bg-slate-700/80 transition-colors"
-                aria-label="Emoji picker"
-              >
-                😊
-              </button>
+      <button
+        type="button"
+        onClick={sendVoiceMessage}
+        className="px-4 py-1.5 rounded-full bg-blue-500 text-white font-medium hover:bg-blue-600 transition shadow-md"
+      >
+        Send voice
+      </button>
+    </div>
 
-              <button
-                type="button"
-                onClick={handleAttachClick}
-                className="h-10 w-10 flex items-center justify-center rounded-full text-xl text-slate-300 hover:bg-slate-700/80 transition-colors"
-                aria-label="Attach"
-              >
-                📎
-              </button>
+  </div>
+)}
 
-              <input
-                ref={fileInputRef}
-                type="file"
-                className="hidden"
-                multiple
-                onChange={handleFilesSelected}
-                accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.txt,.zip,.rar"
-              />
+<div className="flex items-end gap-3">
 
-              <div className="flex-1">
-                <textarea
-                  ref={inputRef}
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  rows={1}
-                  className="w-full max-h-28 rounded-2xl bg-wa-chat/90 border border-slate-800/80 focus:border-wa-accent text-sm px-3 py-2.5 resize-none placeholder:text-slate-500 focus:outline-none shadow-inner"
-                  placeholder="Type a message"
-                />
-              </div>
+  <button
+    type="button"
+    onClick={() => setShowEmojiPicker((v) => !v)}
+    className="h-10 w-10 flex items-center justify-center rounded-full text-xl text-blue-500 hover:bg-blue-50 transition"
+    aria-label="Emoji picker"
+  >
+    😊
+  </button>
 
-              <button
-                type="button"
-                onClick={toggleRecording}
-                className={`h-10 w-10 flex items-center justify-center rounded-full text-xl ${
-                  isRecording
-                    ? 'text-red-300 bg-red-900/60 hover:bg-red-800/80'
-                    : 'text-slate-300 hover:bg-slate-700/80'
-                } transition-colors`}
-                aria-label="Record voice"
-              >
-                {isRecording ? '■' : '🎙️'}
-              </button>
+  <button
+    type="button"
+    onClick={handleAttachClick}
+    className="h-10 w-10 flex items-center justify-center rounded-full text-xl text-blue-500 hover:bg-blue-50 transition"
+    aria-label="Attach"
+  >
+    📎
+  </button>
 
-              <button
-                type="button"
-                onClick={handleSend}
-                className="h-10 w-10 flex items-center justify-center rounded-full text-xl text-wa-chat bg-wa-accent hover:bg-wa-accent-light transition-colors shadow-lg shadow-emerald-500/30"
-                aria-label="Send message"
-              >
-                ➤
-              </button>
-            </div>
+  <input
+    ref={fileInputRef}
+    type="file"
+    className="hidden"
+    multiple
+    onChange={handleFilesSelected}
+    accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.txt,.zip,.rar"
+  />
+
+  <div className="flex-1">
+    <textarea
+      ref={inputRef}
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
+      onKeyDown={handleKeyDown}
+      rows={1}
+      className="w-full max-h-28 rounded-2xl bg-white border border-blue-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-sm px-4 py-3 resize-none placeholder:text-blue-300 focus:outline-none transition shadow-sm"
+      placeholder="Type a message"
+    />
+  </div>
+
+  <button
+    type="button"
+    onClick={toggleRecording}
+    className={`h-10 w-10 flex items-center justify-center rounded-full text-xl transition ${
+      isRecording
+        ? 'text-white bg-red-500 hover:bg-red-600'
+        : 'text-blue-500 hover:bg-blue-50'
+    }`}
+    aria-label="Record voice"
+  >
+    {isRecording ? '■' : '🎙️'}
+  </button>
+
+  <button
+    type="button"
+    onClick={handleSend}
+    className="h-10 w-10 flex items-center justify-center rounded-full text-xl text-white bg-blue-500 hover:bg-blue-600 transition shadow-lg"
+    aria-label="Send message"
+  >
+    ➤
+  </button>
+
+</div>
+
           </div>
         </main>
       </div>
